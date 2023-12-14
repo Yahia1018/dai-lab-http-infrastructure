@@ -1,8 +1,0 @@
-services:
-
-  site-a:
-    image: nginx
-    ports:
-      - "8080:80"
-    volumes:
-      - ./static_website:/usr/share/nginx/html
