@@ -1,7 +1,7 @@
 services:
 
-  static_web:
-    image: nginx
+  api:
+    image: labo-http-api
     build: .
     ports:
-      - "8080:80"
+      - "7070:7070"
