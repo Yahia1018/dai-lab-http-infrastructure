@@ -1,0 +1,7 @@
+services:
+
+  static_web:
+    image: nginx
+    build: .
+    ports:
+      - "8080:80"

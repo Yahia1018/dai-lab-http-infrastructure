@@ -30,3 +30,39 @@ server {
 
 - `listen` defines the port on which the server listens
 - The block `location /` indicates 
+
+
+To use the website, run the following command in the directory containing the website folder, nginx.conf file, and the dockerfile :
+
+```
+$ docker build -t webserver .
+```
+
+And then :
+
+```
+$ docker run -d -p 8080:80 webserver
+```
+
+The website will then be running on localhost:8080
+
+## Step 2
+
+------------
+
+We have created a file named compose.yml in the same directory as the previous files and its contents are as following :
+
+```
+services:
+
+  static_web:
+    image: nginx
+    build: .
+    ports:
+      - "8080:80"
+
+```
+
+- `image` defines the image to use
+- `build` build the dockerfile
+- `ports` defines the ports to listen on for the local machine and the webserver
