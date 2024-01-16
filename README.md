@@ -56,7 +56,7 @@ We have created a file named compose.yml in the same directory as the previous f
 services:
 
   static_web:
-    image: nginx
+    image: webserver
     build: .
     ports:
       - "8080:80"
