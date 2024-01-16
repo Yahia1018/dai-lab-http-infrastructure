@@ -1,6 +1,6 @@
 # dai-lab-http-infrastructure
 
-## Step 1
+## Step 1 - Static Web site
 
 ------------
 
@@ -46,7 +46,7 @@ $ docker run -d -p 8080:80 webserver
 
 The website will then be running on localhost:8080
 
-## Step 2
+## Step 2 - Docker compose
 
 ------------
 
@@ -67,7 +67,48 @@ services:
 - `build` build the dockerfile
 - `ports` defines the ports to listen on for the local machine and the webserver
 
-## Step 4
+## Step 3 - HTTP API server
+
+------------
+
+In this step, we implemented a simple HTTP API server using Javalin, a lightweight Java web framework. Our API manages a list of farm products, and each product has details such as name, price per kilogram, organic status, origin, and an image path.
+
+### API Endpoints
+
+### Fetch All Products
+- **Endpoint**: `/api/products`
+- **Method**: GET
+- **Description**: Get the details of all farm products.
+
+### Fetch a Single Product
+- **Endpoint**: `/api/products/{productId}`
+- **Method**: GET
+- **Description**: Get the details of a specific farm product identified by its ID.
+
+### Fetch Image of a Product
+- **Endpoint**: `/api/products/image/{productId}`
+- **Method**: GET
+- **Description**: Get the image of a specific farm product identified by its ID.
+
+### Add a New Product
+- **Endpoint**: `/api/products`
+- **Method**: POST
+- **Description**: Add a new farm product. Provide the product details in the request body.
+
+### Update a Product
+- **Endpoint**: `/api/products`
+- **Method**: PUT
+- **Description**: Update the details of a specific farm product identified by its ID. Provide the updated details in the request body.
+
+### Delete a Product
+- **Endpoint**: `/api/products/{productId}`
+- **Method**: DELETE
+- **Description**: Delete a specific farm product identified by its ID.
+
+## Data Model
+We store farm product information in memory using a `ConcurrentHashMap`. Each product is represented by the `Product` class.
+
+## Step 4 - Reverse proxy with Traefik
 
 ------------
 
@@ -109,3 +150,50 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock  
 
 ```
+
+## Step 5 - Scalability and Load Balancing
+
+------------
+
+There are two ways to scale the application :
+
+- Thanks to Traefik, directly modify the [Docker compose file](compose.yml) by adding the following lines to setup a fixed number of replicas, for example here 3:
+
+```
+#compose.yml
+  static_web:
+    ...
+    deploy:
+      replicas: 3
+    ...
+```
+
+- Use the command:
+
+```
+docker-compose up -d --scale <service_name>=<number_of_instances>
+```
+
+### Check if everything is working
+
+- Using the command:
+
+```
+docker-compose ps
+```
+
+INSERER CAPTURE D'ECRAN
+
+- By using Traefik's Dashboard:
+
+INSERER CAPTURE D'ECRAN
+
+We can see that we have the correct number of replicas.
+
+## Step 6 - Load balancing with round-robin and sticky sessions
+
+------------
+
+## Step 7 - Securing Traefik with HTTPS
+
+------------
