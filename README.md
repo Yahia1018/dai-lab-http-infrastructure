@@ -66,3 +66,46 @@ services:
 - `image` defines the image to use
 - `build` build the dockerfile
 - `ports` defines the ports to listen on for the local machine and the webserver
+
+## Step 4
+
+------------
+
+Docker compose :
+
+```
+services:
+
+  static_web:
+    #image: webserver
+    build: ./site
+    #ports:
+    #  - "8000:80"
+    expose:
+      - "80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.static.rule=Host(`localhost`)"
+      #- "traefik.http.services.static.loadbalancer.server.port=80"
+
+  api:
+    #image: api-dependencies
+    build: ./api
+    expose:
+      - "7000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)"      
+      #- "traefik.http.services.api.loadbalancer.server.port=7000"
+
+#dashboard : http://localhost:8080/dashboard#/
+  reverse-proxy:
+    image: traefik:v2.10
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  
+
+```

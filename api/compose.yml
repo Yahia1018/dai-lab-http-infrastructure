@@ -1,7 +1,0 @@
-services:
-
-  api:
-    image: labo-http-api
-    build: .
-    ports:
-      - "7070:7070"

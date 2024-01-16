@@ -1,8 +1,8 @@
 services:
 
   static_web:
-    image: webserver
-    #build: .
+    #image: webserver
+    build: ./site
     #ports:
     #  - "8000:80"
     expose:
@@ -10,16 +10,17 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.static.rule=Host(`localhost`)"
-      - "traefik.http.services.static.loadbalancer.server.port=80"
+      #- "traefik.http.services.static.loadbalancer.server.port=80"
 
   api:
-    image: labo-api
+    #image: api-dependencies
+    build: ./api
     expose:
       - "7000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`localhost/api`)"
-      - "traefik.http.services.api.loadbalancer.server.port=7000"
+      - "traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)"      
+      #- "traefik.http.services.api.loadbalancer.server.port=7000"
 
 #dashboard : http://localhost:8080/dashboard#/
   reverse-proxy:
