@@ -109,3 +109,21 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock  
 
 ```
+
+## Step 5
+
+------------
+
+Added to docker compose under labels :
+- "traefik.http.services.static.loadbalancer.server.port=80"
+- "traefik.http.services.api.loadbalancer.server.port=7000"
+
+
+## Step 6
+
+------------
+
+Add these lines under api service labels in docker compose :
+
+- "traefik.http.services.api.loadBalancer.sticky.cookie=true"
+- "traefik.http.services.api.loadBalancer.sticky.cookie.name=stickycookie"

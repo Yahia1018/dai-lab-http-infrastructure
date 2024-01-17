@@ -1,0 +1,17 @@
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+tls:
+  certificates:
+    - cert: /etc/traefik/certificates/cert.pem
+      key: /etc/traefik/certificates/key.pem
+ 
+entryPoints:
+  http:
+    address: :80
+  https:
+    address: :443
+ 
+api:
+  dashboard: true
+  insecure: true
