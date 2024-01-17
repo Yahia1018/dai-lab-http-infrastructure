@@ -1,10 +1,7 @@
 services:
 
   static_web:
-    #image: webserver
     build: ./site
-    #ports:
-    #  - "8000:80"
     expose:
       - "80"
     labels:
@@ -14,7 +11,6 @@ services:
       - "traefik.http.routers.static.tls=true"
 
   api:
-    #image: api-dependencies
     build: ./api
     expose:
       - "7000"
@@ -26,7 +22,6 @@ services:
       - "traefik.http.services.api.loadBalancer.sticky.cookie.name=stickycookie"
       - "traefik.http.routers.api.tls=true"
 
-#dashboard : http://localhost:8080/dashboard#/
   reverse-proxy:
     image: traefik:v2.10
     command: --api.insecure=true --providers.docker

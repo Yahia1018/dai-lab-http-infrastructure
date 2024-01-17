@@ -112,40 +112,37 @@ We store farm product information in memory using a `ConcurrentHashMap`. Each pr
 
 ------------
 
-Docker compose :
+In order to add the traefik reverse proxy, we had to edit the docker compose file which now looks like this :
 
+Docker compose :
 ```
 services:
 
   static_web:
-    #image: webserver
     build: ./site
-    #ports:
-    #  - "8000:80"
+
+    # expose replaces ports
     expose:
       - "80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.static.rule=Host(`localhost`)"
-      #- "traefik.http.services.static.loadbalancer.server.port=80"
+      - "traefik.http.routers.static.rule=Host(`localhost`)" # defining static website route
 
   api:
-    #image: api-dependencies
     build: ./api
     expose:
       - "7000"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)"      
-      #- "traefik.http.services.api.loadbalancer.server.port=7000"
+      - "traefik.http.routers.api.rule=Host(`localhost`) && PathPrefix(`/api`)" # defining api route
 
-#dashboard : http://localhost:8080/dashboard#/
+  # traefik service
   reverse-proxy:
     image: traefik:v2.10
     command: --api.insecure=true --providers.docker
     ports:
-      - "80:80"
-      - "8080:8080"
+      - "80:80" # port to access the static website/api
+      - "8080:8080" # port to access traefik
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock  
 
@@ -195,11 +192,64 @@ We can see that we have the correct number of replicas.
 
 ------------
 
-Add these lines under api service labels in docker compose :
+Added the following lines to the docker compose file :
 
-- "traefik.http.services.api.loadBalancer.sticky.cookie=true"
-- "traefik.http.services.api.loadBalancer.sticky.cookie.name=stickycookie"
+```
+#compose.yml
+  static_web:
+    ...
+    labels:
+      ...
+      - "traefik.http.services.static.loadbalancer.server.port=80"
+
+  ...
+  api:
+    ...
+    labels:
+      ...
+      - "traefik.http.services.api.loadbalancer.server.port=7000"
+      - "traefik.http.services.api.loadBalancer.sticky.cookie=true" # cookie used to implement sticky session
+      - "traefik.http.services.api.loadBalancer.sticky.cookie.name=stickycookie"
+```
 
 ## Step 7 - Securing Traefik with HTTPS
 
 ------------
+
+## Optional step 1
+
+------------
+
+
+## Optional step 2
+
+------------
+
+For simplicity, we decided to display the products raw data in the home page. To do so, we first of all added the following js script :
+
+```
+document.addEventListener('DOMContentLoaded', function () {
+    // Function to do the get request
+    function fetchData() {
+        fetch('https://localhost/api/products') // Get all products
+            .then(response => response.json())
+            .then(data => {
+                // Show the results in a div with 'apiResults' as id
+                document.getElementById('apiResults').innerHTML = JSON.stringify(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+ 
+    // Call fetch data one the page is laoded
+    fetchData();
+ 
+    // Repeat periodically every 5 seconds
+    setInterval(fetchData, 5000); 
+});
+```
+
+And the following html code to index.html as the script's target :
+
+```
+<div id="apiResults"></div>
+```
