@@ -45,28 +45,19 @@ public class ProductController {
         ctx.json(product);
     }
 
-    public void fetchImage(Context ctx) {
-        int id = Integer.parseInt(ctx.pathParam("productId"));
-        Product product = products.get(id);
-
-        if (product == null) {
-            ctx.status(404);
-            return;
-        }
-
-        ctx.contentType("image/jpg");
-        ctx.result(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(product.imagePath())));
-    }
-
     public void save(Context ctx) {
         Product product = ctx.bodyAsClass(Product.class);
         products.put(++serialId, product);
+
+        ctx.json(product);
         ctx.status(201);
     }
 
     public void update(Context ctx) {
         Product product = ctx.bodyAsClass(Product.class);
         products.put(product.id(), product);
+
+        ctx.json(product);
         ctx.status(200);
     }
 

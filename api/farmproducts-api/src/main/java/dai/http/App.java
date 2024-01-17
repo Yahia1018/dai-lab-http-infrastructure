@@ -10,7 +10,6 @@ public class App {
         ProductController productController = new ProductController();
         app.get("/api/products", productController::fetchAll);
         app.get("/api/products/{productId}", productController::fetchOne);
-//        app.get("/api/products/images/{productId}", productController::fetchImage);
         app.post("/api/products", productController::save);
         app.patch("/api/products", productController::update);
         app.delete("/api/products/{productId}", productController::delete);
