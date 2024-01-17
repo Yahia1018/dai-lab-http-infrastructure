@@ -114,7 +114,6 @@ We store farm product information in memory using a `ConcurrentHashMap`. Each pr
 
 In order to add the traefik reverse proxy, we had to edit the docker compose file which now looks like this :
 
-Docker compose :
 ```
 services:
 
