@@ -8,24 +8,52 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ProductController {
     private static final ConcurrentHashMap<Integer, Product> products = new ConcurrentHashMap<>();
-    private static int serialId = 0;
 
     ProductController() {
-        products.put(++serialId, new Product(serialId, "Apple", 3.6, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Apple.jpg"));
-        products.put(++serialId, new Product(serialId, "Banana", 3.0, true, "Ecuador", "api/farmproducts-api/src/main/java/dai/ressources/Banana.jpg"));
-        products.put(++serialId, new Product(serialId, "Lemon", 1.7, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Lemon.jpg"));
-        products.put(++serialId, new Product(serialId, "Strawberry", 5.6, false, "Italy", "api/farmproducts-api/src/main/java/dai/ressources/Strawberry.jpg"));
-        products.put(++serialId, new Product(serialId, "Orange", 2.5, true, "Spain", "api/farmproducts-api/src/main/java/dai/ressources/Orange.jpg"));
-        products.put(++serialId, new Product(serialId, "Tomato", 3.6, false, "Spain", "api/farmproducts-api/src/main/java/dai/ressources/Tomato.jpg"));
-        products.put(++serialId, new Product(serialId, "Potato", 3.0, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Potato.jpg"));
-        products.put(++serialId, new Product(serialId, "Carrot", 3.2, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Carrot.jpg"));
-        products.put(++serialId, new Product(serialId, "Onion", 4.8, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Cucumber.jpg"));
-        products.put(++serialId, new Product(serialId, "Pumpkin", 3.6, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Pumpkin.jpg"));
-        products.put(++serialId, new Product(serialId, "Brocoli", 4.5, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Brocoli.jpg"));
-        products.put(++serialId, new Product(serialId, "Cauliflower", 5.0, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Cauliflower.jpg"));
-        products.put(++serialId, new Product(serialId, "Spinach", 2.4, false, "Italy", "api/farmproducts-api/src/main/java/dai/ressources/Spinach.jpg"));
-        products.put(++serialId, new Product(serialId, "Paris Mushroom", 2.0, false, "Netherlands", "api/farmproducts-api/src/main/java/dai/ressources/ParisMushroom.jpg"));
-        products.put(++serialId, new Product(serialId, "Grape", 2.65, false, "South Africa", "api/farmproducts-api/src/main/java/dai/ressources/Grapes.jpg"));
+        Product apple = new Product("Apple", 3.6, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Apple.jpg");
+        products.put(apple.id(), apple);
+
+        Product banana = new Product("Banana", 3.0, true, "Ecuador", "api/farmproducts-api/src/main/java/dai/ressources/Banana.jpg");
+        products.put(banana.id(), banana);
+
+        Product lemon = new Product("Lemon", 1.7, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Lemon.jpg");
+        products.put(lemon.id(), lemon);
+
+        Product strawberry = new Product("Strawberry", 5.6, false, "Italy", "api/farmproducts-api/src/main/java/dai/ressources/Strawberry.jpg");
+        products.put(strawberry.id(), strawberry);
+
+        Product orange = new Product("Orange", 2.5, true, "Spain", "api/farmproducts-api/src/main/java/dai/ressources/Orange.jpg");
+        products.put(orange.id(), orange);
+
+        Product tomato = new Product("Tomato", 3.6, false, "Spain", "api/farmproducts-api/src/main/java/dai/ressources/Tomato.jpg");
+        products.put(tomato.id(), tomato);
+
+        Product potato = new Product("Potato", 3.0, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Potato.jpg");
+        products.put(potato.id(), potato);
+
+        Product carrot = new Product("Carrot", 3.2, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Carrot.jpg");
+        products.put(carrot.id(), carrot);
+
+        Product onion = new Product("Onion", 4.8, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Onion.jpg");
+        products.put(onion.id(), onion);
+
+        Product pumpkin = new Product("Pumpkin", 3.6, false, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Pumpkin.jpg");
+        products.put(pumpkin.id(), pumpkin);
+
+        Product brocoli = new Product("Brocoli", 4.5, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Brocoli.jpg");
+        products.put(brocoli.id(), brocoli);
+
+        Product cauliflower = new Product("Cauliflower", 5.0, true, "Switzerland", "api/farmproducts-api/src/main/java/dai/ressources/Cauliflower.jpg");
+        products.put(cauliflower.id(), cauliflower);
+
+        Product spinach = new Product("Spinach", 2.4, false, "Italy", "api/farmproducts-api/src/main/java/dai/ressources/Spinach.jpg");
+        products.put(spinach.id(), spinach);
+
+        Product parisMushroom = new Product("Paris Mushroom", 2.0, false, "Netherlands", "api/farmproducts-api/src/main/java/dai/ressources/ParisMushroom.jpg");
+        products.put(parisMushroom.id(), parisMushroom);
+
+        Product grape = new Product("Grape", 2.65, false, "South Africa", "api/farmproducts-api/src/main/java/dai/ressources/Grapes.jpg");
+        products.put(grape.id(), grape);
     }
 
     public void fetchAll(Context ctx) {
@@ -47,7 +75,7 @@ public class ProductController {
     public void save(Context ctx) {
         System.out.println("Hello");
         Product product = ctx.bodyAsClass(Product.class);
-        products.put(++serialId, product);
+        products.put(product.id(), product);
 
         ctx.json(product);
         ctx.status(201);

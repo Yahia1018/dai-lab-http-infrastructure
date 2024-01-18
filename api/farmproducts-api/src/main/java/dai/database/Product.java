@@ -3,6 +3,7 @@ package dai.database;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
+    private static int serialId = 0;
     @JsonProperty("id")
     private int id;
     @JsonProperty("name")
@@ -56,19 +57,14 @@ public class Product {
         this.imagePath = imagePath;
     }
 
-    public Product() {}
+    public Product() { this.id = ++serialId; }
 
-    public Product(int id) {
-        this.id = id;
-    }
-
-    public Product(int id,
-                   String name,
+    public Product(String name,
                    double kgPrice,
                    boolean isBio,
                    String origin,
                    String imagePath) {
-        this.id = id;
+        this.id = ++serialId;
         this.name = name;
         this.kgPrice = kgPrice;
         this.isBio = isBio;
