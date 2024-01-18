@@ -66,7 +66,7 @@ The website will then be running on localhost:8080
 
 We have created a file named compose.yml in the same directory as the previous files and its contents are as following :
 
-```
+```yaml
 services:
 
   static_web:
@@ -128,7 +128,7 @@ We store farm product information in memory using a `ConcurrentHashMap`. Each pr
 
 In order to add the traefik reverse proxy, we had to edit the [Docker compose file](compose.yml) which now looks like this :
 
-```
+```yaml
 services:
 
   static_web:
@@ -177,7 +177,7 @@ There are two ways to scale the application :
 
 - Thanks to Traefik, directly modify the [Docker compose file](compose.yml) by adding the following lines to setup a fixed number of replicas, for example here 3:
 
-```
+```yaml
 #compose.yml
   static_web:
     ...
@@ -210,7 +210,7 @@ We can see that we have the correct number of replicas with both verifications.
 
 Added the following lines to the docker compose file :
 
-```
+```yaml
 #compose.yml
   static_web:
     ...
@@ -309,7 +309,7 @@ volumes:
 
 For simplicity, we decided to display the products raw data in the home page. To do so, we first of all added the following js script :
 
-```
+```javascript
 document.addEventListener('DOMContentLoaded', function () {
     // Function to do the get request
     function fetchData() {
@@ -332,6 +332,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 And the following html code to index.html as the script's target :
 
-```
+```html
 <div id="apiResults"></div>
 ```
