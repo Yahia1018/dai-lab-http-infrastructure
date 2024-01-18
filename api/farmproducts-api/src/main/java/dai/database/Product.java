@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Product {
     @JsonProperty("id")
-    private final int id;
+    private int id;
     @JsonProperty("name")
     private String name;
     @JsonProperty("kgPrice")
@@ -55,6 +55,8 @@ public class Product {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public Product() {}
 
     public Product(int id) {
         this.id = id;

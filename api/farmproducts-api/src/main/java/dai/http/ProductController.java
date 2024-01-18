@@ -4,7 +4,6 @@ import dai.database.Product;
 
 import io.javalin.http.Context;
 
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ProductController {
@@ -46,6 +45,7 @@ public class ProductController {
     }
 
     public void save(Context ctx) {
+        System.out.println("Hello");
         Product product = ctx.bodyAsClass(Product.class);
         products.put(++serialId, product);
 
